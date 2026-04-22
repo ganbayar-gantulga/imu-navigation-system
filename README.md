@@ -5,33 +5,37 @@
 ![NumPy](https://img.shields.io/badge/NumPy-1.24-013243?style=flat-square&logo=numpy&logoColor=white)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-3.7-11557C?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=flat-square)
+![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=flat-square) 
+
+**EN** | [MN](#-тойм-монгол)
+
+---
 
 Real-time IMU (Inertial Measurement Unit) sensor data processing and 3D orientation visualization system built with Arduino and Python. Implements a **Complementary Filter** to fuse accelerometer and gyroscope data for stable orientation estimation.
+
+Arduino болон Python ашиглан бодит цагийн IMU мэдрэгчийн өгөгдлийг боловсруулж, 3D чиглэлийг дүрслэн харуулах систем. Accelerometer болон Gyroscope-ийн өгөгдлийг нэгтгэхдээ **Complementary Filter** алгоритм ашигладаг.
 
 ---
 
 ## 📺 Demo
 
-> 3D orientation visualization — MPU-6050 simulation mode
-
-![Demo](assets/demo.gif)
+![Demo](assets/demo.png)
 
 ---
 
-## 🎯 Project Overview
+## 🎯 Overview / Тойм
 
-| | |
-|---|---|
-| **Sensor** | MPU-6050 (Accelerometer + Gyroscope) |
-| **Algorithm** | Complementary Filter (α = 0.96) |
-| **Interface** | Arduino → Python Serial |
-| **Visualization** | Real-time 3D + 2D graphs |
-| **Mode** | Simulation & Hardware ready |
+| | English | Монгол |
+|---|---|---|
+| **Sensor** | MPU-6050 (Accel + Gyro) | MPU-6050 мэдрэгч |
+| **Algorithm** | Complementary Filter α=0.96 | Нэгдсэн шүүлтүүр |
+| **Interface** | Arduino → Python Serial | Arduino → Python холболт |
+| **Visualization** | Real-time 3D + 2D graphs | Бодит цагийн 3D + 2D график |
+| **Mode** | Simulation & Hardware ready | Дуурайлга ба Hardware горим |
 
 ---
 
-## 🧠 How It Works
+## 🧠 How It Works / Хэрхэн ажилладаг
 
 ```
 MPU-6050 Sensor (Arduino)
@@ -41,49 +45,49 @@ MPU-6050 Sensor (Arduino)
   serial_reader.py
         │
         ▼
-┌───────────────────────┐
-│   Complementary Filter │
-│                        │
-│  angle = α × (angle + gyro × dt)   │
-│        + (1-α) × acc_angle         │
-│                        │
-│  Gyroscope  → 96% weight (fast)    │
-│  Accelerometer → 4% weight (stable)│
-└───────────────────────┘
+┌──────────────────────────────────────┐
+│        Complementary Filter          │
+│                                      │
+│  angle = α × (angle + gyro × dt)    │
+│        + (1-α) × acc_angle          │
+│                                      │
+│  Gyroscope     → 96%  (хурдан)      │
+│  Accelerometer →  4%  (тогтвортой)  │
+└──────────────────────────────────────┘
         │
         ▼
   3D Visualization + CSV Logger
 ```
 
-### Why Complementary Filter?
+### Why Complementary Filter? / Яагаад энэ алгоритм?
 
-| Sensor | Advantage | Disadvantage |
+| Мэдрэгч / Sensor | Давуу тал / Advantage | Сул тал / Disadvantage |
 |---|---|---|
-| Accelerometer | No drift, stable long-term | Noisy, slow response |
-| Gyroscope | Fast, precise short-term | Drift over time |
-| **Combined** | **Fast + Stable** ✅ | — |
+| Accelerometer | Drift байхгүй / No drift | Шуугиантай / Noisy |
+| Gyroscope | Хурдан, нарийн / Fast & precise | Цаг хугацаанд буруудна / Drifts |
+| **Хоёулаа / Combined** | **Хурдан + Тогтвортой ✅** | — |
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure / Төслийн бүтэц
 
 ```
 imu-navigation-system/
 │
 ├── 📁 arduino/
-│   └── imu_reader.ino          # MPU-6050 data acquisition
+│   └── imu_reader.ino      # MPU-6050 өгөгдөл уншигч / Data acquisition
 │
 ├── 📁 python/
-│   ├── simulate.py             # IMU data simulator (no hardware needed)
-│   ├── filter.py               # Complementary Filter implementation
-│   ├── visualizer.py           # Real-time 3D + 2D visualization
-│   └── main.py                 # Entry point — ties all modules together
+│   ├── simulate.py         # IMU дуурайлга / Simulator (no hardware needed)
+│   ├── filter.py           # Complementary Filter
+│   ├── visualizer.py       # 3D + 2D дүрслэл / Visualization
+│   └── main.py             # Үндсэн файл / Entry point
 │
 ├── 📁 data/
-│   └── session_*.csv           # Logged IMU sessions
+│   └── session_*.csv       # Хадгалсан өгөгдөл / Logged sessions
 │
 ├── 📁 notebooks/
-│   └── analysis.ipynb          # EDA + filter comparison
+│   └── analysis.ipynb      # Шинжилгээ / Analysis
 │
 ├── requirements.txt
 └── README.md
@@ -91,9 +95,9 @@ imu-navigation-system/
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start / Эхлэх заавар
 
-### 1. Clone & Install
+### 1. Clone & Install / Суулгах
 
 ```bash
 git clone git@github.com:ganbayar-gantulga/imu-navigation-system.git
@@ -106,20 +110,20 @@ conda install numpy matplotlib scipy -y
 pip install pyserial
 ```
 
-### 2. Run — Simulation Mode (No Hardware)
+### 2. Simulation Mode / Дуурайлга горим (Hardware шаардахгүй)
 
 ```bash
 python python/main.py --mode simulate
 ```
 
-### 3. Run — Arduino Mode (Hardware)
+### 3. Arduino Mode / Arduino горим (Hardware шаардлагатай)
 
 ```bash
-# Upload arduino/imu_reader.ino to your Arduino first
+# arduino/imu_reader.ino-г эхлээд Arduino руу upload хийнэ
 python python/main.py --mode arduino --port COM3
 ```
 
-### 4. Save Data to CSV
+### 4. Save Data / Өгөгдөл хадгалах
 
 ```bash
 python python/main.py --mode simulate --save
@@ -127,9 +131,7 @@ python python/main.py --mode simulate --save
 
 ---
 
-## 📊 Visualization
-
-The system displays real-time data in a dashboard:
+## 📊 Visualization / Дүрслэл
 
 ```
 ┌─────────────────┬──────────────────┐
@@ -146,9 +148,9 @@ The system displays real-time data in a dashboard:
 
 ---
 
-## 🔌 Arduino Wiring (MPU-6050)
+## 🔌 Arduino Wiring / Холболт (MPU-6050)
 
-| MPU-6050 | Arduino Uno |
+| MPU-6050 Pin | Arduino Uno Pin |
 |---|---|
 | VCC | 5V |
 | GND | GND |
@@ -157,43 +159,42 @@ The system displays real-time data in a dashboard:
 
 ---
 
-## 📈 Filter Performance
+## 📈 Filter Performance / Шүүлтүүрийн нарийвчлал
 
-The Complementary Filter closely tracks true orientation:
-
-```
-   Time |   Roll (filtered) | Roll (true)  | Error
---------|--------------------|--------------|-------
-   0.10 |          +5.23°   |     +5.89°   | 0.66°
-   0.50 |         +18.45°   |    +18.92°   | 0.47°
-   1.00 |         +29.12°   |    +29.34°   | 0.22°
-```
+| Цаг / Time | Roll (filtered) | Roll (true) | Алдаа / Error |
+|---|---|---|---|
+| 0.10s | +5.23° | +5.89° | 0.66° |
+| 0.50s | +18.45° | +18.92° | 0.47° |
+| 1.00s | +29.12° | +29.34° | 0.22° |
 
 ---
 
-## 🗺️ Roadmap
+## 🗺️ Roadmap / Цааш хийх зүйлс
 
-- [x] IMU data simulator
+- [x] IMU data simulator / Дуурайлга
 - [x] Complementary Filter
-- [x] Real-time 3D visualization
-- [x] CSV data logger
-- [ ] Arduino hardware integration
-- [ ] Kalman Filter comparison
-- [ ] Jupyter notebook analysis
-- [ ] Magnetometer (Yaw drift correction)
+- [x] Real-time 3D visualization / Бодит цагийн дүрслэл
+- [x] CSV data logger / Өгөгдөл хадгалах
+- [ ] Arduino hardware integration / Hardware холболт
+- [ ] Kalman Filter comparison / Харьцуулалт
+- [ ] Jupyter notebook analysis / Шинжилгээ
+- [ ] Magnetometer — Yaw drift correction / Луужин мэдрэгч
 
 ---
 
-## 📚 Key Concepts Learned
+## 📚 Key Concepts Learned / Сурсан зүйлс
 
-- **Hardware-Software integration** — Arduino ↔ Python Serial communication
-- **Signal processing** — Sensor fusion with Complementary Filter
-- **Real-time systems** — Live data streaming and visualization
-- **Rotation mathematics** — Euler angles and rotation matrices
+| Англи | Монгол |
+|---|---|
+| Hardware-Software integration | Arduino ↔ Python Serial холболт |
+| Signal processing | Мэдрэгчийн өгөгдөл боловсруулалт |
+| Real-time systems | Бодит цагийн өгөгдөл дамжуулалт |
+| Rotation mathematics | Euler өнцөг, эргэлтийн матриц |
+| Sensor fusion | Олон мэдрэгчийн өгөгдөл нэгтгэх |
 
 ---
 
-## 👤 Author
+## 👤 Author / Хөгжүүлэгч
 
 **Ganbayar Gantulga**
 [GitHub](https://github.com/ganbayar-gantulga) · [Portfolio](https://github.com/ganbayar-gantulga?tab=repositories)
@@ -202,4 +203,4 @@ The Complementary Filter closely tracks true orientation:
 
 ## 📄 License
 
-MIT License — feel free to use and modify.
+MIT License — feel free to use and modify. / Чөлөөтэй ашиглаж болно.
